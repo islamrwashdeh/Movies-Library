@@ -1,3 +1,4 @@
+'user strict'
 const { response } = require("express");
 const express= require("express");
 const movies =require("./data.json");
