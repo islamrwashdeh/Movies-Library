@@ -42,5 +42,11 @@
 4. create new tow endpoints (trending , search)
 ## Project Features
 1.  Getting the latest trending movie
-2. Search for movies by name
+2. Search for movies by name        
+  
+  # movies-library 0.3
+   ## WRRC
+   ![WRRC](https://github.com/islamrwashdeh/Movies-Library/blob/main/Screenshot%20(78)%20(1).png?raw=true)
+
+
 

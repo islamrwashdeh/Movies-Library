@@ -1,9 +1,10 @@
+'user strict'
 const { response } = require("express");
 const express= require("express");
 const movies =require("./data.json");
 const app =express();
 
-
+// day 12 updates
 const axios =require("axios");
 
 // read dotenv file
@@ -13,21 +14,39 @@ const dotenv =require("dotenv");
 dotenv.config();
 //process.env >> built in fucn
 const APIKEY =process.env.APIKEY;
+// console.log(APIKEY);
+
+//Day 13 
+
+const pg =require("pg");
+const DATABASE_URL= process.env.DATABASE_URL;
+
+//Initalize the connection 
+const client = new pg.Client(DATABASE_URL);
+
+
 
 
 function Movie(title, overview, poster_path,id,release_date){
+    this.id=id;
     this.title=title;
     this.overview=overview;
-    this.poster_path=poster_path;
-    this.id=id;
     this.release_date=release_date;
+    this.poster_path=poster_path;
+    
 }
+//database
 
 app.get("/",helloMovie);
 app.get("/favorit",hellofavorit);
 app.get("/trending",helloTrending);
 app.get("/search",hellosearch);
 app.get("*",notFoundHandler);
+
+app.use(express.json());
+app.post("/addMovies",helloAddMovies);
+app.get("/getMovies",getVaforiteMovies)
+
 
 app.use(errorHandler);
 function errorHandler(error,req,res){
@@ -38,12 +57,32 @@ function errorHandler(error,req,res){
     return res.status(500).send(err);
 }
 
+function helloAddMovies(req,res){
+    const mov =req.body;
+    // console.log(req.body);
+    const sql = `INSERT INTO favMovies(title,overview,release_date,poster_path) VALUES($1,$2,$3,$4) RETURNING *`
+   const arrvalues=[mov.title,mov.overview,mov.release_date,mov.poster_path];
+    client.query(sql,arrvalues).then((result)=>{
+        response.status(201).json(result.rows);
+    }).catch(error =>{
+        errorHandler(error,req,res);
+    }) 
+}
+
+function getVaforiteMovies(req,res){
+    const sql =`SELECT * FROM favMovies`;
+    client.query(sql).then((result)=>{
+        response.status(200).json(result.rows);
+        // console.log(result);
+    })
+}
+
 function helloMovie(req ,res){
     let arr=[]
     // arr.push(movies.title);
     // arr.push(movies.overview);
     // arr.push(movies.poster_path);
-    movies.data.forEach((value) => {
+     movies.data.forEach((value) => {
         let theMovie = new Movie(value.title, value.overview, value.poster_path);
         arr.push(theMovie);
         return res.status(200).json(arr);
@@ -96,6 +135,16 @@ function notFoundHandler(req,res){
     return res.send("Page Not Found")
 }
    
-app.listen(3000,()=>{
-    console.log("listen to 3000")
+
+
+// if every thing is og with database then run the server
+client.connect()
+.then(()=>{
+    app.listen(5000, () => {
+        console.log('Listen to port 5000');
+    });
 });
+
+
+
+
