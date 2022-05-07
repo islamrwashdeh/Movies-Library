@@ -1,0 +1,26 @@
+{
+  "name": "movies-library",
+  "version": "1.0.0",
+  "description": "**Author Name**: islam rwashdeh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/islamrwashdeh/Movies-Library.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/islamrwashdeh/Movies-Library/issues"
+  },
+  "homepage": "https://github.com/islamrwashdeh/Movies-Library#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1"
+  }
+}
