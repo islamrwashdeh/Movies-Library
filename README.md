@@ -28,7 +28,7 @@
 1.  retrieve specific information from my data.json file.
 2.  send back that information to the homepage or "/".
 3.  return a welcoming string on the favorite page "/favorite".
-4.  format the retrieved data using a constructor into the form I want.
+4.  format the retrieved data using a constructor into the form I  want.
 
 # movies-library 0.2
 ## WRRC
